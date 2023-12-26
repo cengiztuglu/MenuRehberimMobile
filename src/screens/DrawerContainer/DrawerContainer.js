@@ -9,11 +9,19 @@ export default function DrawerContainer(props) {
   return (
     <View style={styles.content}>
       <View style={styles.container}>
+      <MenuButton
+          title="MENU REHBERIM"
+          source={require("../../../assets/icons/home.png")}
+          onPress={() => {
+            navigation.navigate("MenuRehberim");
+            navigation.closeDrawer();
+          }}
+        />
         <MenuButton
           title="ANA SAYFA"
           source={require("../../../assets/icons/home.png")}
           onPress={() => {
-            navigation.navigate("Categories");
+            navigation.navigate("Ana Sayfa");
             navigation.closeDrawer();
           }}
         />

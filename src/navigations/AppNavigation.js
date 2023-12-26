@@ -4,6 +4,8 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createDrawerNavigator} from '@react-navigation/drawer' 
 import CategoriesScreen from '../screens/Categories/CategoriesScreen';
 import RecipeScreen from '../screens/Recipe/RecipeScreen';
+import MenuRehberim from '../screens/MenuRehberim/MenuRehberimScreen';
+import HomeScreen from '../screens/Home/HomeScreen';
 import RecipesListScreen from '../screens/RecipesList/RecipesListScreen';
 import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
 import IngredientScreen from '../screens/Ingredient/IngredientScreen';
@@ -21,10 +23,12 @@ function MainNavigator() {
             textAlign: 'center',
             alignSelf: 'center',
             flex: 1,
+            color: '#c10e18',
           }
       }}
     >
-      <Stack.Screen name='Ana Sayfa' component={CategoriesScreen} />
+      <Stack.Screen name='MenuRehberim' component={MenuRehberim} />
+      <Stack.Screen name='Ana Sayfa' component={HomeScreen} />
       <Stack.Screen name='Categories' component={CategoriesScreen}/>
       <Stack.Screen name='Recipe' component={RecipeScreen}/>
       <Stack.Screen name='RecipesList' component={RecipesListScreen} />
