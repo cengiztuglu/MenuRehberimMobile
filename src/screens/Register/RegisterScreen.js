@@ -11,35 +11,56 @@ import {
 } from "react-native";
 
 export default function App() {
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("../../../assets/MenuRehberimLogo.png")} /> 
-      <StatusBar style="auto" />
-      <Text style={[styles.headText]}>Giriş Yap</Text>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Kullanıcı Adı/Restoran Adı"
+          placeholder="Ad"
           placeholderTextColor="#fff"
-          onChangeText={(username) => setUsername(email)}
+          onChangeText={(email) => setName(email)}
+        /> 
+      </View> 
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Soyad"
+          placeholderTextColor="#fff"
+          onChangeText={(email) => setSurname(email)}
+        /> 
+      </View> 
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Kullanıcı Adı"
+          placeholderTextColor="#fff"
+          onChangeText={(email) => setUsername(email)}
+        /> 
+      </View> 
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Email"
+          placeholderTextColor="#003f5c"
+          onChangeText={(email) => setEmail(email)}
         /> 
       </View> 
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
           placeholder="Şifre"
-          placeholderTextColor="#fff"
+          placeholderTextColor="#003f5c"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         /> 
-      </View> 
-      <TouchableOpacity>
-        <Text style={styles.registerText}>Hesabınız yok mu ? Şimdi kayıt olun.</Text> 
-      </TouchableOpacity> 
+      </View>  
       <TouchableOpacity style={styles.loginBtn}>
-        <Text style={styles.loginText}>Giriş Yap</Text> 
+        <Text style={styles.loginText}>Kayıt Ol</Text> 
       </TouchableOpacity> 
     </View> 
   );
@@ -55,7 +76,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   inputView: {
-    backgroundColor: "#342f29",
+    backgroundColor: "#A6A1A1",
     borderRadius: 30,
     width: "70%",
     height: 45,
@@ -64,7 +85,6 @@ const styles = StyleSheet.create({
   },
   TextInput: {
     color:'#fff',
-    fontSize:14,
     height: 50,
     flex: 1,
     padding: 10,
@@ -72,13 +92,8 @@ const styles = StyleSheet.create({
   },
   registerText: {
     height: 30,
-    marginBottom: 10,
+    marginBottom: 30,
     fontSize:15,
-  },
-  headText: {
-    fontWeight:'bold',
-    marginBottom: 10,
-    fontSize:40,
   },
   loginBtn: {
     width: "80%",
