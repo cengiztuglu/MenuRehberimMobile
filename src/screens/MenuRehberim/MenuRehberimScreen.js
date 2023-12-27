@@ -40,16 +40,57 @@ export default function MenuRehberimScreen(props) {
             
             <View style={styles.containerAbout}>
                 <Text style={[styles.normalText, styles.centerText]}>
-                    Menu Rehberim ile bütün menüler elinizin altında !
+                    <Text style={styles.redText}> Bütün menüler </Text> 
+                    elinizin altında !
                 </Text>
-                <Text style={[styles.normalText, styles.centerText]}>
-                    Güncel fiyatlar tek bir yerde !
+                <Text style={[styles.normalText, styles.centerText,]}>
+                <   Text style={styles.redText}> Güncel fiyatlar </Text> 
+                    tek bir yerde !
+                </Text>
+                <Text style={styles.paragraphText}>
+                Yemek Tutkunları için bir araya getirdiğimiz bu uygulama, damak zevkinize hitap edecek pek çok farklı restoranın menülerini ve güncel fiyatlarını bir arada sunuyor.
+                </Text>
+                <Text style={styles.paragraphText}>
+                Uygulamamızda bulabileceğiniz geniş yelpaze, her damak tadına uygun seçenekler sunuyor. Size en yakın veya tercih ettiğiniz restoranın en güncel menüsüne ve fiyatlarına kolayca ulaşmanızı sağlayarak, lezzetli bir deneyim için rehberlik ediyoruz.
                 </Text>
             </View>
-        </View>
-        
-        
-    );
 
+            <View style={styles.experienceContainer}>
+                <View style={styles.experienceItem}>
+                    <Text style={[styles.numberText,styles.redText]}>2</Text>
+                    <Text style={[styles.centerText,styles.boldText]}>Yıllık Deneyim</Text>
+                </View>
+                <View style={styles.experienceItem}>
+                    <Text style={[styles.numberText,styles.redText]}>2</Text>
+                    <Text style={[styles.centerText,styles.boldText]}>Takım Üyesi</Text>
+                </View>
+                <View style={styles.experienceItem}>
+                    <Text style={[styles.numberText,styles.redText]}>10</Text>
+                    <Text style={[styles.centerText,styles.boldText]}>Restoran</Text>
+                </View>
+            </View>
+            <View style={styles.experienceContainer}>
+                <View style={styles.experienceItem}>
+                    <Text style={[styles.numberText,styles.redText]}>650</Text>
+                    <Text style={[styles.centerText,styles.boldText]}>Kullanıcı</Text>
+                </View>
+                <View style={styles.experienceItem}>
+                    <Text style={[styles.numberText,styles.redText]}>10+</Text>
+                    <Text style={[styles.centerText,styles.boldText]}>Menu</Text>
+                </View>
+            </View>
+
+            <View style={styles.footer}>
+                <View style={styles.footerLeft}>
+                    <Text style={styles.footerText}>Yusuf Furkan Aktay</Text>
+                    <Text style={styles.footerText}>202803062</Text>
+                </View>
+                <View style={styles.footerRight}>
+                    <Text style={styles.footerText}>Cengiz Tuglu</Text>
+                    <Text style={styles.footerText}>202805003</Text>
+                </View>
+            </View>
+        </View>
+    );
 };
 
