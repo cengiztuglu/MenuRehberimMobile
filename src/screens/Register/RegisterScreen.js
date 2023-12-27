@@ -18,6 +18,8 @@ export default function App() {
   const [password, setPassword] = useState("");
   return (
     <View style={styles.container}>
+      <Text style={[styles.headText,styles.redText]}>Menu Rehberim'e</Text>
+      <Text style={[styles.headText]}>Kayıt Ol</Text>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -46,15 +48,15 @@ export default function App() {
         <TextInput
           style={styles.TextInput}
           placeholder="Email"
-          placeholderTextColor="#003f5c"
+          placeholderTextColor="#fff"
           onChangeText={(email) => setEmail(email)}
         /> 
       </View> 
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Şifre"
-          placeholderTextColor="#003f5c"
+          placeholder="Sifre"
+          placeholderTextColor="#fff"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         /> 
@@ -72,28 +74,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  image: {
-    marginBottom: 40,
-  },
   inputView: {
-    backgroundColor: "#A6A1A1",
+    backgroundColor: "#342f29",
     borderRadius: 30,
     width: "70%",
     height: 45,
     marginBottom: 20,
     alignItems: "center",
   },
+  headText: {
+    fontWeight:'bold',
+    marginBottom: 10,
+    fontSize:40,
+  },
+  redText: {
+    color: '#c10e18',
+  },
   TextInput: {
     color:'#fff',
     height: 50,
+    fontSize:20,
     flex: 1,
     padding: 10,
     marginLeft: 20,
-  },
-  registerText: {
-    height: 30,
-    marginBottom: 30,
-    fontSize:15,
   },
   loginBtn: {
     width: "80%",

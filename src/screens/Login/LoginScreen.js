@@ -10,9 +10,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-export default function App() {
+import RegisterButton from "../../components/RegisterButton/RegisterButton";
+
+export default function LoginScreen(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { navigation } = props;
+  const onPressRegister = () => {
+    navigation.navigate("Register");
+  };
+
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require("../../../assets/MenuRehberimLogo.png")} /> 
@@ -35,9 +42,13 @@ export default function App() {
           onChangeText={(password) => setPassword(password)}
         /> 
       </View> 
-      <TouchableOpacity>
-        <Text style={styles.registerText}>Hesabınız yok mu ? Şimdi kayıt olun.</Text> 
-      </TouchableOpacity> 
+      <View style={styles.container}>
+          <RegisterButton
+            onPress={() => {
+              navigation.navigate("Register");
+            }}
+          />
+        </View>
       <TouchableOpacity style={styles.loginBtn}>
         <Text style={styles.loginText}>Giriş Yap</Text> 
       </TouchableOpacity> 
@@ -86,7 +97,8 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 40,
+    marginTop: 50,
+    marginBottom: 40,
     color:'#fff',
     backgroundColor: "#c10e18",
   },
