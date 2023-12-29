@@ -1,3 +1,22 @@
+export const restaurants = [
+  {
+    id: 0,
+    name: 'Burger Kıng',
+    photo_url: '../assets/Restaurants/BurgerKing/Burgerking_Bg.jpeg'
+   },
+  {
+    id: 1,
+    name: 'Popeyes',
+    photo_url: 'https://rs-menus-api.roocdn.com/images/2c7f3b88-ae3c-43b7-9a9e-7f8c4e275ccf/image.jpeg?width=1200&height=630&fit=crop'
+  },
+  {
+    id: 2,
+    name: 'Arbys',
+    photo_url:
+      'https://images.unsplash.com/photo-1533777324565-a040eb52facd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'
+  },
+];
+
 export const categories = [
   {
     id: 3,

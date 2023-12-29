@@ -8,6 +8,7 @@ import MenuRehberim from '../screens/MenuRehberim/MenuRehberimScreen';
 import LoginScreen from '../screens/Login/LoginScreen';
 import RegisterScreen from '../screens/Register/RegisterScreen';
 import HomeScreen from '../screens/Home/HomeScreen';
+import RestaurantsScreen from '../screens/Restaurants/RestaurantsScreen';
 import RecipesListScreen from '../screens/RecipesList/RecipesListScreen';
 import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
 import IngredientScreen from '../screens/Ingredient/IngredientScreen';
@@ -32,7 +33,8 @@ function MainNavigator() {
       <Stack.Screen name='MenuRehberim' component={MenuRehberim} />
       <Stack.Screen name='Login' component={LoginScreen} />
       <Stack.Screen name='Register' component={RegisterScreen} />
-      <Stack.Screen name='Ana Sayfa' component={HomeScreen} />
+      <Stack.Screen name='AnaSayfa' component={HomeScreen} />
+      <Stack.Screen name='Restaurants' component={RestaurantsScreen}/>
       <Stack.Screen name='Categories' component={CategoriesScreen}/>
       <Stack.Screen name='Recipe' component={RecipeScreen}/>
       <Stack.Screen name='RecipesList' component={RecipesListScreen} />

@@ -29,7 +29,15 @@ export default function DrawerContainer(props) {
           title="ANA SAYFA"
           source={require("../../../assets/icons/home.png")}
           onPress={() => {
-            navigation.navigate("Ana Sayfa");
+            navigation.navigate("AnaSayfa");
+            navigation.closeDrawer();
+          }}
+        />
+        <MenuButton
+          title="RESTORANLAR"
+          source={require("../../../assets/icons/category.png")}
+          onPress={() => {
+            navigation.navigate("Restaurants");
             navigation.closeDrawer();
           }}
         />
