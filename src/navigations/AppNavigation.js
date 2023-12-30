@@ -9,6 +9,7 @@ import LoginScreen from '../screens/Login/LoginScreen';
 import RegisterScreen from '../screens/Register/RegisterScreen';
 import HomeScreen from '../screens/Home/HomeScreen';
 import RestaurantsScreen from '../screens/Restaurants/RestaurantsScreen';
+import EditRestaurantScreen from '../screens/EditRestaurant/EditRestaurantScreen';
 import MenuItemsScreen from '../screens/MenuItems/MenuItemsScreen';
 import RecipesListScreen from '../screens/RecipesList/RecipesListScreen';
 import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
@@ -31,12 +32,13 @@ function MainNavigator() {
           }
       }}
     >
-      <Stack.Screen name='MenuRehberim' component={MenuRehberim} />
-      <Stack.Screen name='Login' component={LoginScreen} />
-      <Stack.Screen name='Register' component={RegisterScreen} />
+      <Stack.Screen name='Menu Rehberim' component={MenuRehberim} />
+      <Stack.Screen name='Giriş Yap' component={LoginScreen} />
+      <Stack.Screen name='Kayıt Ol' component={RegisterScreen} />
       <Stack.Screen name='AnaSayfa' component={HomeScreen} />
       <Stack.Screen name='Restaurants' component={RestaurantsScreen}/>
       <Stack.Screen name='MenuItems' component={MenuItemsScreen}/>
+      <Stack.Screen name='Restoranınızı Tanımlayın' component={EditRestaurantScreen}/>
       <Stack.Screen name='Categories' component={CategoriesScreen}/>
       <Stack.Screen name='Recipe' component={RecipeScreen}/>
       <Stack.Screen name='RecipesList' component={RecipesListScreen} />

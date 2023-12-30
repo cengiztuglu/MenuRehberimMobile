@@ -12,7 +12,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingHorizontal: 20,
     textDecorationColor: 'red',
-  }
+  },
+  image: {
+    marginBottom: 40,
+    height:150,
+    width:150,
+    resizeMode:'cover',
+  },
 });
 
 export default styles;

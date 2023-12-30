@@ -17,7 +17,7 @@ export default function LoginScreen(props) {
   const [password, setPassword] = useState("");
   const { navigation } = props;
   const onPressRegister = () => {
-    navigation.navigate("Register");
+    navigation.navigate("Kayıt Ol");
   };
 
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Image } from "react-native";
 import PropTypes from "prop-types";
 import styles from "./styles";
 import MenuButton from "../../components/MenuButton/MenuButton";
@@ -9,11 +9,12 @@ export default function DrawerContainer(props) {
   return (
     <View style={styles.content}>
       <View style={styles.container}>
+      <Image style={styles.image} source={require("../../../assets/MenuRehberimLogo.png")} /> 
         <MenuButton
           title="MENU REHBERIM"
           source={require("../../../assets/icons/home.png")}
           onPress={() => {
-            navigation.navigate("MenuRehberim");
+            navigation.navigate("Menu Rehberim");
             navigation.closeDrawer();
           }}
         />
@@ -21,7 +22,7 @@ export default function DrawerContainer(props) {
           title="LOGIN"
           source={require("../../../assets/icons/home.png")}
           onPress={() => {
-            navigation.navigate("Login");
+            navigation.navigate("Giriş Yap");
             navigation.closeDrawer();
           }}
         />
@@ -49,6 +50,14 @@ export default function DrawerContainer(props) {
             navigation.closeDrawer();
           }}
         />
+        <MenuButton
+        title="RESTORAN PROFILIM"
+        source={require("../../../assets/icons/category.png")}
+        onPress={() => {
+          navigation.navigate("Restoranınızı Tanımlayın");
+          navigation.closeDrawer();
+        }}
+      />
         <MenuButton
           title="CATEGORIES"
           source={require("../../../assets/icons/category.png")}
