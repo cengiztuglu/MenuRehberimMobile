@@ -3,17 +3,17 @@ import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from 'reac
 
 const EditRestaurantScreen = () => {
   const profile = {
-    restName: '',
-    restDesc: '',
-    restAddress: '',
-    restCategory: '',
-    restPhoto: 'https://example.com/jane-doe-avatar.png',
+    itemName: '',
+    itemDesc: '',
+    itemPrice: '',
+    itemCategory: '',
+    itemPhoto: 'https://example.com/jane-doe-avatar.png',
   }
-  const [restName, setrestName] = useState(profile.restName);
-  const [restDesc, setrestDesc] = useState(profile.restDesc);
-  const [restAddress, setrestAddress] = useState(profile.restAddress);
-  const [restCategory, setrestCategory] = useState(profile.restCategory);
-  const [restPhoto, setrestPhoto] = useState(profile.restPhoto);
+  const [itemName, setitemName] = useState(profile.itemName);
+  const [itemDesc, setitemDesc] = useState(profile.itemDesc);
+  const [itemPrice, setitemPrice] = useState(profile.itemPrice);
+  const [itemCategory, setitemCategory] = useState(profile.itemCategory);
+  const [itemPhoto, setitemPhoto] = useState(profile.itemPhoto);
 
   const handleSubmit = () => {
 
@@ -31,35 +31,35 @@ const EditRestaurantScreen = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.form}>
-        <Text style={styles.label}>Restoran Adı :</Text>
+        <Text style={styles.label}>Urun Adı :</Text>
         <TextInput
           style={styles.input}
-          placeholder="Restoran Adı"
-          value={restName}
-          onChangeText={setrestName}
+          placeholder="Urun Adı"
+          value={itemName}
+          onChangeText={setitemName}
         />
-        <Text style={styles.label}>Restoran Açıklaması :</Text>
+        <Text style={styles.label}>Urun Açıklaması :</Text>
         <TextInput
           style={styles.input}
-          placeholder="Restoran Açıklaması"
-          value={restDesc}
-          onChangeText={setrestDesc}
+          placeholder="Urun Açıklaması"
+          value={itemDesc}
+          onChangeText={setitemDesc}
         />
-        <Text style={styles.label}>Restoran Adresi :</Text>
+        <Text style={styles.label}>Urun Fiyatı :</Text>
         <TextInput
           style={styles.input}
-          placeholder="Restoran Adresi"
-          value={restAddress}
-          onChangeText={setrestAddress}
+          placeholder="Urun Fiyatı"
+          value={itemPrice}
+          onChangeText={setitemPrice}
         />
-        <Text style={styles.label}>Restoran Kategorisi</Text>
+        <Text style={styles.label}>Urun Kategorisi</Text>
         <TextInput
           style={styles.input}
-          placeholder="Restoran Kategorisi"
-          value={restCategory}
-          onChangeText={setrestCategory}
+          placeholder="Urun Kategorisi"
+          value={itemCategory}
+          onChangeText={setitemCategory}
         />
-        <TouchableOpacity style={styles.button} onPress={() => handleSubmit({restName, restDesc, restAddress, restCategory})}>
+        <TouchableOpacity style={styles.button} onPress={() => handleSubmit({itemName, itemDesc, itemPrice, itemCategory})}>
           <Text style={styles.buttonText}>Kaydet</Text>
         </TouchableOpacity>
       </View>

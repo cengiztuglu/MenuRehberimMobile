@@ -10,6 +10,7 @@ import RegisterScreen from '../screens/Register/RegisterScreen';
 import HomeScreen from '../screens/Home/HomeScreen';
 import RestaurantsScreen from '../screens/Restaurants/RestaurantsScreen';
 import EditRestaurantScreen from '../screens/EditRestaurant/EditRestaurantScreen';
+import EditMenuScreen from '../screens/EditMenu/EditMenuScreen';
 import MenuItemsScreen from '../screens/MenuItems/MenuItemsScreen';
 import RecipesListScreen from '../screens/RecipesList/RecipesListScreen';
 import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
@@ -39,6 +40,7 @@ function MainNavigator() {
       <Stack.Screen name='Restaurants' component={RestaurantsScreen}/>
       <Stack.Screen name='MenuItems' component={MenuItemsScreen}/>
       <Stack.Screen name='Restoranınızı Tanımlayın' component={EditRestaurantScreen}/>
+      <Stack.Screen name='Menunuzu Duzenleyin' component={EditMenuScreen}/>
       <Stack.Screen name='Categories' component={CategoriesScreen}/>
       <Stack.Screen name='Recipe' component={RecipeScreen}/>
       <Stack.Screen name='RecipesList' component={RecipesListScreen} />

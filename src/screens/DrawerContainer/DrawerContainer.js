@@ -58,6 +58,14 @@ export default function DrawerContainer(props) {
           navigation.closeDrawer();
         }}
       />
+      <MenuButton
+      title="MENU ICERIGIM"
+      source={require("../../../assets/icons/category.png")}
+      onPress={() => {
+        navigation.navigate("Menunuzu Duzenleyin");
+        navigation.closeDrawer();
+      }}
+    />
         <MenuButton
           title="CATEGORIES"
           source={require("../../../assets/icons/category.png")}
