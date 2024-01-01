@@ -27,14 +27,6 @@ export default function DrawerContainer(props) {
           }}
         />
         <MenuButton
-          title="ANA SAYFA"
-          source={require("../../../assets/icons/home.png")}
-          onPress={() => {
-            navigation.navigate("AnaSayfa");
-            navigation.closeDrawer();
-          }}
-        />
-        <MenuButton
           title="RESTORANLAR"
           source={require("../../../assets/icons/category.png")}
           onPress={() => {
@@ -66,6 +58,14 @@ export default function DrawerContainer(props) {
         navigation.closeDrawer();
       }}
     />
+      <MenuButton
+      title="COMMENT"
+      source={require("../../../assets/icons/category.png")}
+      onPress={() => {
+        navigation.navigate("Comment");
+        navigation.closeDrawer();
+      }}
+      />
         <MenuButton
           title="CATEGORIES"
           source={require("../../../assets/icons/category.png")}

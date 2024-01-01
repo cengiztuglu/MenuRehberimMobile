@@ -12,6 +12,7 @@ import RestaurantsScreen from '../screens/Restaurants/RestaurantsScreen';
 import EditRestaurantScreen from '../screens/EditRestaurant/EditRestaurantScreen';
 import EditMenuScreen from '../screens/EditMenu/EditMenuScreen';
 import MenuItemsScreen from '../screens/MenuItems/MenuItemsScreen';
+import CommentEditScreen from '../screens/Comment/CommentEditScreen';
 import RecipesListScreen from '../screens/RecipesList/RecipesListScreen';
 import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
 import IngredientScreen from '../screens/Ingredient/IngredientScreen';
@@ -41,6 +42,7 @@ function MainNavigator() {
       <Stack.Screen name='MenuItems' component={MenuItemsScreen}/>
       <Stack.Screen name='Restoranınızı Tanımlayın' component={EditRestaurantScreen}/>
       <Stack.Screen name='Menunuzu Duzenleyin' component={EditMenuScreen}/>
+      <Stack.Screen name='Comment' component={CommentEditScreen}/>
       <Stack.Screen name='Categories' component={CategoriesScreen}/>
       <Stack.Screen name='Recipe' component={RecipeScreen}/>
       <Stack.Screen name='RecipesList' component={RecipesListScreen} />
