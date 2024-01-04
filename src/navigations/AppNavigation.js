@@ -38,11 +38,11 @@ function MainNavigator() {
       <Stack.Screen name='Giriş Yap' component={LoginScreen} />
       <Stack.Screen name='Kayıt Ol' component={RegisterScreen} />
       <Stack.Screen name='AnaSayfa' component={HomeScreen} />
-      <Stack.Screen name='Restaurants' component={RestaurantsScreen}/>
-      <Stack.Screen name='MenuItems' component={MenuItemsScreen}/>
+      <Stack.Screen name='Restoranlar' component={RestaurantsScreen}/>
+      <Stack.Screen name='Menu' component={MenuItemsScreen}/>
       <Stack.Screen name='Restoranınızı Tanımlayın' component={EditRestaurantScreen}/>
       <Stack.Screen name='Menunuzu Duzenleyin' component={EditMenuScreen}/>
-      <Stack.Screen name='Comment' component={CommentEditScreen}/>
+      <Stack.Screen name='Yorumlar' component={CommentEditScreen}/>
       <Stack.Screen name='Categories' component={CategoriesScreen}/>
       <Stack.Screen name='Recipe' component={RecipeScreen}/>
       <Stack.Screen name='RecipesList' component={RecipesListScreen} />

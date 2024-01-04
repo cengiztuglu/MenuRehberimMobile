@@ -1,58 +1,39 @@
 import React, { useLayoutEffect,useState } from "react";
-import { FlatList, Text, View, TouchableHighlight, Image, StyleSheet, TouchableOpacity,TextInput } from "react-native";
+import { FlatList, Text, View, TouchableHighlight, StyleSheet, TouchableOpacity,TextInput } from "react-native";
 import styles from "./styles";
-import { menuitemedit } from "../../data/dataArrays";
 import MenuImage from "../../components/MenuImage/MenuImage";
 import { getCategoryName } from "../../data/MockDataAPI";
+import { Ionicons } from '@expo/vector-icons'; 
 
 export default Comments = (props) => {
   const data = [
     {
       id: 1,
-      image: 'https://bootdey.com/img/Content/avatar/avatar1.png',
       name: 'Frank Odalthh',
       comment:
         'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
     },
     {
       id: 2,
-      image: 'https://bootdey.com/img/Content/avatar/avatar6.png',
       name: 'John DoeLink',
       comment:
         'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
     },
     {
       id: 3,
-      image: 'https://bootdey.com/img/Content/avatar/avatar7.png',
       name: 'March SoulLaComa',
       comment:
         'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
     },
     {
       id: 4,
-      image: 'https://bootdey.com/img/Content/avatar/avatar2.png',
       name: 'Finn DoRemiFaso',
       comment:
         'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
     },
     {
       id: 5,
-      image: 'https://bootdey.com/img/Content/avatar/avatar3.png',
       name: 'Maria More More',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
-    },
-    {
-      id: 6,
-      image: 'https://bootdey.com/img/Content/avatar/avatar4.png',
-      name: 'Clark June Boom!',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
-    },
-    {
-      id: 7,
-      image: 'https://bootdey.com/img/Content/avatar/avatar5.png',
-      name: 'The googler',
       comment:
         'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
     },
@@ -83,30 +64,51 @@ export default Comments = (props) => {
     
     <TouchableHighlight underlayColor="rgba(73,182,77,0.9)" onPress={() => onPressRecipe(item)}>
       <View style={styles.containeritem}>
-        <Image style={styles.photo} source={{ uri: item.photo_url }} />
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
       </View>
     </TouchableHighlight>
   );
 
+  const [rating, setRating] = useState(0); // Kullanıcının puanını burada tutuyoruz.
+
+  // Yıldızları göstermek için bir dizi oluşturuyoruz.
+  const stars = Array.from({ length: 5 }, (_, index) => (
+    <TouchableOpacity key={index} onPress={() => setRating(index + 1)}>
+      <Ionicons
+        name={index < rating ? 'star' : 'star-outline'} // Seçilen puan kadar yıldızı dolu, geri kalanını boş gösteriyoruz.
+        size={32}
+        color="#FFD700" // Yıldız rengi
+        marginTop={15}
+        alignItems="center"
+      />
+    </TouchableOpacity>
+  ));
+
 
   return (
 
-  <View style={styles.containerTop}>
-        
-    <View style={styles.form}>
-      <Text style={styles.label}>Yorumunuz :</Text>
+  <View >
+    <View >  
+    <View style={stylesComment.form}>
+      <Text style={stylesComment.label}>Yorumunuz :</Text>
         <TextInput
-          style={styles.input}
+          style={stylesComment.input}
           placeholder="Yorumunuz"
           value={comments}
           onChangeText={setComment}
         />
-        <TouchableOpacity style={styles.button} onPress={() => handleSubmit({itemName, itemDesc, itemPrice, itemCategory})}>
-          <Text style={styles.buttonText}>Kaydet</Text>
+
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={stylesComment.label}>Puanınız: </Text>
+        {stars} 
+      </View>
+        
+        <TouchableOpacity style={stylesComment.button} onPress={() => handleSubmit({itemName, itemDesc, itemPrice, itemCategory})}>
+          <Text style={stylesComment.buttonText}>Kaydet</Text>
         </TouchableOpacity>
     </View>
+    </View> 
 
     <FlatList
       style={styles.root}
@@ -123,9 +125,6 @@ export default Comments = (props) => {
         return (
 
         <View style={stylesComment.container}>
-          <TouchableOpacity onPress={() => {}}>
-            <Image style={stylesComment.image} source={{ uri: Notification.image }} />
-          </TouchableOpacity>
           <View style={stylesComment.content}>
             <View style={stylesComment.contentHeader}>
               <Text style={stylesComment.name}>{Notification.name}</Text>
@@ -147,10 +146,11 @@ const stylesComment = StyleSheet.create({
     backgroundColor: '#ffffff',
     marginTop: 300,
   },
-  containerTop: {
+  topcontainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft: 30,
   },
   container: {
     paddingLeft: 19,
@@ -172,12 +172,6 @@ const stylesComment = StyleSheet.create({
     height: 1,
     backgroundColor: '#CCCCCC',
   },
-  image: {
-    width: 45,
-    height: 45,
-    borderRadius: 22,
-    marginLeft: 20,
-  },
   time: {
     fontSize: 11,
     color: '#808080',
@@ -188,20 +182,23 @@ const stylesComment = StyleSheet.create({
   },
   form: {
     width: '80%',
+    marginLeft: 50,
   },
   label: {
     marginTop: 20,
     fontSize: 15,
+    fontWeight:'bold',
   },
   input: {
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
-    fontSize: 18,
+    fontSize: 16,
   },
   button: {
     marginTop: 20,
+    marginBottom: 20,
     backgroundColor: '#c10e18',
     borderRadius: 5,
     paddingVertical: 10,
@@ -210,13 +207,9 @@ const stylesComment = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 16,
     alignItems:'center',
   },
 })
-
-                                            
-
-
 
 

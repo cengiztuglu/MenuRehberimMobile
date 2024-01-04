@@ -19,7 +19,7 @@ export default function DrawerContainer(props) {
           }}
         />
         <MenuButton
-          title="LOGIN"
+          title="GİRİŞ YAP"
           source={require("../../../assets/icons/home.png")}
           onPress={() => {
             navigation.navigate("Giriş Yap");
@@ -30,7 +30,7 @@ export default function DrawerContainer(props) {
           title="RESTORANLAR"
           source={require("../../../assets/icons/category.png")}
           onPress={() => {
-            navigation.navigate("Restaurants");
+            navigation.navigate("Restoranlar");
             navigation.closeDrawer();
           }}
         />
@@ -38,7 +38,7 @@ export default function DrawerContainer(props) {
           title="MENU"
           source={require("../../../assets/icons/category.png")}
           onPress={() => {
-            navigation.navigate("MenuItems");
+            navigation.navigate("Menu");
             navigation.closeDrawer();
           }}
         />
@@ -59,10 +59,10 @@ export default function DrawerContainer(props) {
       }}
     />
       <MenuButton
-      title="COMMENT"
+      title="YORUMLAR"
       source={require("../../../assets/icons/category.png")}
       onPress={() => {
-        navigation.navigate("Comment");
+        navigation.navigate("Yorumlar");
         navigation.closeDrawer();
       }}
       />

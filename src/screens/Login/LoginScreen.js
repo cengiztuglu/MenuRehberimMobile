@@ -45,7 +45,7 @@ export default function LoginScreen(props) {
       <View style={styles.container}>
           <RegisterButton
             onPress={() => {
-              navigation.navigate("Register");
+              navigation.navigate("Kayıt Ol");
             }}
           />
         </View>
