@@ -1,10 +1,9 @@
 import React, { useLayoutEffect,useState } from "react";
-import { FlatList, Text, View, TouchableHighlight, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, Text, View, TouchableHighlight, Image, StyleSheet, TouchableOpacity,TextInput } from "react-native";
 import styles from "./styles";
 import { menuitemedit } from "../../data/dataArrays";
 import MenuImage from "../../components/MenuImage/MenuImage";
 import { getCategoryName } from "../../data/MockDataAPI";
-
 
 export default Comments = (props) => {
   const data = [
@@ -59,7 +58,7 @@ export default Comments = (props) => {
     },
   ]
 
-  const [comments, setComments] = useState(data)
+  const [comments, setComment] = useState(data)
 
   const { navigation } = props;
 
@@ -81,6 +80,7 @@ export default Comments = (props) => {
   };
 
   const renderRecipes = ({ item }) => (
+    
     <TouchableHighlight underlayColor="rgba(73,182,77,0.9)" onPress={() => onPressRecipe(item)}>
       <View style={styles.containeritem}>
         <Image style={styles.photo} source={{ uri: item.photo_url }} />
@@ -89,7 +89,25 @@ export default Comments = (props) => {
       </View>
     </TouchableHighlight>
   );
+
+
   return (
+
+  <View style={styles.containerTop}>
+        
+    <View style={styles.form}>
+      <Text style={styles.label}>Yorumunuz :</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Yorumunuz"
+          value={comments}
+          onChangeText={setComment}
+        />
+        <TouchableOpacity style={styles.button} onPress={() => handleSubmit({itemName, itemDesc, itemPrice, itemCategory})}>
+          <Text style={styles.buttonText}>Kaydet</Text>
+        </TouchableOpacity>
+    </View>
+
     <FlatList
       style={styles.root}
       data={comments}
@@ -103,34 +121,36 @@ export default Comments = (props) => {
       renderItem={item => {
         const Notification = item.item
         return (
-          
-          <View style={stylesComment.container}>
 
-            {/* <View>
-              <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={menuitemedit} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} />
-            </View> */}
-
-            <TouchableOpacity onPress={() => {}}>
-              <Image style={stylesComment.image} source={{ uri: Notification.image }} />
-            </TouchableOpacity>
-            <View style={stylesComment.content}>
-              <View style={stylesComment.contentHeader}>
-                <Text style={stylesComment.name}>{Notification.name}</Text>
-                <Text style={stylesComment.time}>9:58 am</Text>
-              </View>
+        <View style={stylesComment.container}>
+          <TouchableOpacity onPress={() => {}}>
+            <Image style={stylesComment.image} source={{ uri: Notification.image }} />
+          </TouchableOpacity>
+          <View style={stylesComment.content}>
+            <View style={stylesComment.contentHeader}>
+              <Text style={stylesComment.name}>{Notification.name}</Text>
+              <Text style={stylesComment.time}>9:58 am</Text>
+            </View>
               <Text rkType="primary3 mediumLine">{Notification.comment}</Text>
             </View>
           </View>
+       
         )
       }}
     />
+  </View>
   )
 }
 
 const stylesComment = StyleSheet.create({
   root: {
     backgroundColor: '#ffffff',
-    marginTop: 10,
+    marginTop: 300,
+  },
+  containerTop: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   container: {
     paddingLeft: 19,
@@ -166,8 +186,37 @@ const stylesComment = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  form: {
+    width: '80%',
+  },
+  label: {
+    marginTop: 20,
+    fontSize: 15,
+  },
+  input: {
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    fontSize: 18,
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: '#c10e18',
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems:'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    alignItems:'center',
+  },
 })
 
                                             
+
+
 
 
