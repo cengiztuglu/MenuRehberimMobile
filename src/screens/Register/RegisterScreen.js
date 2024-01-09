@@ -9,19 +9,21 @@ import {
   TouchableOpacity,
 } from "react-native";
 import axios from 'axios'; // Axios kütüphanesini ekliyoruz
-
+import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 export default function App() {
+  const navigation = useNavigation();
   const [name, setName] = useState("");
   const [surName, setSurname] = useState("");
   const [userName, setUsername] = useState("");
-  const [eMail, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [registrationType, setRegistrationType] = useState("restaurant");
 
   const handleRegister = () => {
-    const userData = { name, surName, userName, eMail, password };
-    const restaurantEndpoint = 'http://192.168.213.91:8080/api/restourantAdd';
-    const userEndpoint = 'http://192.168.213.91:8080/api/user';
+    const userData = { name, surName, userName, email, password };
+    const restaurantEndpoint = 'http://192.168.70.91:8080/api/restourantAdd';
+    const userEndpoint = 'http://192.168.70.91:8080/api/user';
 
     let endpoint = '';
     if (registrationType === 'restaurant') {
@@ -40,13 +42,32 @@ export default function App() {
     })
       .then((response) => {
         if (registrationType === 'restaurant') {
-          console.log('Restoran kayıt işlemi başarılı:', response.data);
+          Alert.alert(
+            'Başarılı!',
+            'Restoran kaydı başarıyla oluşturuldu.Giriş sayfasına yönlendiriliyorsunuz.',
+            [
+              { text: 'Tamam', onPress: () => navigation.navigate('Giriş Yap')},
+            ]
+          );
         } else if (registrationType === 'user') {
-          console.log('Kullanıcı kayıt işlemi başarılı:', response.data);
+          Alert.alert(
+            'Başarılı!',
+            'Kullanıcı kaydı başarıyla oluşturuldu. Giriş sayfasına yönlendiriliyorsunuz.',
+            [
+              { text: 'Tamam', onPress: () => navigation.navigate('Giriş Yap') },
+            ]
+          );
         }
       })
       .catch((error) => {
         console.error('Hata oluştu:', error);
+        Alert.alert(
+          'Hata!',
+          'Bir hata oluştu, lütfen tekrar deneyin.',
+          [
+            { text: 'Tamam' },
+          ]
+        );
       });
   };
 
