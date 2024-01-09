@@ -1,32 +1,88 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
-const EditRestaurantScreen = () => {
-  const profile = {
-    restName: '',
-    restDesc: '',
-    restAddress: '',
-    restCategory: '',
-    restPhoto: 'https://example.com/jane-doe-avatar.png',
-  }
-  const [restName, setrestName] = useState(profile.restName);
-  const [restDesc, setrestDesc] = useState(profile.restDesc);
-  const [restAddress, setrestAddress] = useState(profile.restAddress);
-  const [restCategory, setrestCategory] = useState(profile.restCategory);
-  const [restPhoto, setrestPhoto] = useState(profile.restPhoto);
+const EditRestaurantScreen = ({ route }) => {
+  const { username } = route.params;
+  const [restourantName, setRestName] = useState('');
+  const [placeDefinition, setRestDesc] = useState('');
+  const [placeAdress, setRestAddress] = useState('');
+  const [category, setRestCategory] = useState('');
+  const [placeBgPicName, setRestPhoto] = useState(null);
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    getPermissionAsync();
+  }, []);
 
-  }
+  const getPermissionAsync = async () => {
+    if (Platform.OS !== 'web') {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Galeri erişimi reddedildi!');
+      }
+    }
+  };
+
+  const handleChoosePhoto = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaType: 'photo',
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+        base64: false,
+      });
+  
+      console.log('ImagePicker result:', result);
+  
+      if (!result.cancelled) {
+        setRestPhoto(result.assets[0].uri); // Resmin URI'sini alıp state'e ata
+      } else {
+        console.log('Resim seçilmedi veya bir hata oluştu.');
+      }
+    } catch (error) {
+      console.error('ImagePicker error:', error);
+    }
+  };
+  
+  const handleSubmit = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('restourantName', restourantName);
+      formData.append('placeDefinition', placeDefinition);
+      formData.append('placeAdress', placeAdress);
+      formData.append('category', category);
+  
+      const localUri = placeBgPicName;
+      const filename = localUri.split('/').pop();
+      const type = 'image/jpeg'; // Resim tipini doğrudan belirle
+  
+      formData.append('file', { uri: localUri, name: filename, type });
+  
+      const response = await fetch(`http://192.168.173.91:8080/api/placeAdd/${username}`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log('API response:', data);
+      } else {
+        console.error('API request failed.');
+      }
+    } catch (error) {
+      console.error('Error during API request:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
-        <Image
-          style={styles.avatar}
-          source={{uri: 'https://www.bootdey.com/img/Content/avatar/avatar3.png'}}
-        />
-        <TouchableOpacity style={styles.changeAvatarButton} onPress={() => {/* open image picker */}}>
+        <Image source={{ uri: placeBgPicName }} style={{ width: 200, height: 200 }} />
+        <TouchableOpacity style={styles.changeAvatarButton} onPress={handleChoosePhoto}>
           <Text style={styles.changeAvatarButtonText}>Fotoğrafı Değiştir</Text>
         </TouchableOpacity>
       </View>
@@ -35,35 +91,34 @@ const EditRestaurantScreen = () => {
         <TextInput
           style={styles.input}
           placeholder="Restoran Adı"
-          value={restName}
-          onChangeText={setrestName}
+          value={restourantName}
+          onChangeText={setRestName}
         />
         <Text style={styles.label}>Restoran Açıklaması :</Text>
         <TextInput
           style={styles.input}
           placeholder="Restoran Açıklaması"
-          value={restDesc}
-          onChangeText={setrestDesc}
+          value={placeDefinition}
+          onChangeText={setRestDesc}
         />
         <Text style={styles.label}>Restoran Adresi :</Text>
         <TextInput
           style={styles.input}
           placeholder="Restoran Adresi"
-          value={restAddress}
-          onChangeText={setrestAddress}
+          value={placeAdress}
+          onChangeText={setRestAddress}
         />
         <Text style={styles.label}>Restoran Kategorisi</Text>
         <TextInput
           style={styles.input}
           placeholder="Restoran Kategorisi"
-          value={restCategory}
-          onChangeText={setrestCategory}
+          value={category}
+          onChangeText={setRestCategory}
         />
-        <TouchableOpacity style={styles.button} onPress={() => handleSubmit({restName, restDesc, restAddress, restCategory})}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Kaydet</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   );
 };
@@ -94,32 +149,24 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    alignItems:'center',
+    alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
     fontSize: 18,
-    alignItems:'center',
+    alignItems: 'center',
   },
   avatarContainer: {
     marginTop: 20,
     alignItems: 'center',
   },
-  avatar: {
-    width: 300,
-    height: 200,
-    borderRadius: 50,
-    borderColor: '#c10e18',
-    borderWidth:3,
-  },
   changeAvatarButton: {
     marginTop: 10,
-    color: '#c10e18', 
+    color: '#c10e18',
   },
   changeAvatarButtonText: {
     color: '#c10e18',
     fontSize: 18,
-    
   },
 });
 

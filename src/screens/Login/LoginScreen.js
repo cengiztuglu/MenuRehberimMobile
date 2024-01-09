@@ -25,8 +25,8 @@ export default function LoginScreen(props) {
 
   const handleLogin = () => {
     const API_URL = isRestaurantLogin
-      ? "http://192.168.70.91:8080/api/rlogin"
-      : "http://192.168.70.91:8080/api/login";
+      ? "http://192.168.173.91:8080/api/rlogin"
+      : "http://192.168.173.91:8080/api/login";
 
    
     axios
