@@ -12,6 +12,9 @@ import {
 import axios from "axios"; 
 
 import RegisterButton from "../../components/RegisterButton/RegisterButton";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 export default function LoginScreen(props) {
   const [userName, setUsername] = useState("");
@@ -34,20 +37,21 @@ export default function LoginScreen(props) {
         userName,
         password,
       })
-      .then((response) => {
-        // Başarılı yanıt
+      .then(async (response) => {
         console.log("Başarılı giriş:", response.data);
-        navigation.navigate('Restoranınızı Tanımlayın', { username: userName });
 
-
-       
-      })
-      .catch((error) => {
-       
-        console.error("Giriş hatası:", error);
-
-      
-      });
+      // Oturum bilgilerini saklama
+      try {
+        await AsyncStorage.setItem('username', userName);
+        navigation.navigate('Restoranınızı Tanımlayın');
+      } catch (error) {
+        console.error("AsyncStorage hatası:", error);
+      }
+    })
+    .catch((error) => {
+      // Hata durumu
+      console.error("Giriş hatası:", error);
+    });
   };
 
   return (

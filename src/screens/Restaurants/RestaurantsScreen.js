@@ -1,50 +1,44 @@
-import React, { useLayoutEffect } from "react";
-import { FlatList, Text, View, Image, TouchableHighlight } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, Image } from 'react-native';
 import styles from "./styles";
-import { categories, restaurants } from "../../data/dataArrays";
-import { getNumberOfRecipes } from "../../data/MockDataAPI";
-import MenuImage from "../../components/MenuImage/MenuImage";
 
-export default function CategoriesScreen(props) {
-  const { navigation } = props;
+const RestaurantScreen = () => {
+  const [restaurants, setRestaurants] = useState([]);
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitleStyle: {
-        fontWeight: "bold",
-        textAlign: "center",
-        alignSelf: "center",
-        flex: 1,
-      },
-      headerLeft: () => (
-        <MenuImage
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
-      ),
-      headerRight: () => <View />,
-    });
+  useEffect(() => {
+    fetch('http://192.168.173.91:8080/api/getPlace')
+      .then(response => response.json())
+      .then(data => {
+        // Burada gelen verileri kullanabilirsiniz, örneğin:
+        setRestaurants(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
   }, []);
-  const onPressCategory = (item) => {
-    const title = item.name;
-    const category = item;
-    navigation.navigate("RecipesList", { category, title });
-  };
 
-  const renderCategory = ({ item }) => (
-    <TouchableHighlight underlayColor="rgba(73,182,77,0.9)" onPress={() => onPressCategory(item)}>
-      <View style={styles.categoriesItemContainer}>
-        <Image style={styles.categoriesPhoto} source={{ uri: item.photo_url }} />
-        <Text style={styles.categoriesName}>{item.name}</Text>
-        <Text style={styles.categoriesInfo}>{getNumberOfRecipes(item.id)} recipes</Text>
-      </View>
-    </TouchableHighlight>
+  // Restoran verilerini FlatList içinde kullanarak göstermek için bir renderItem fonksiyonu tanımlayabilirsiniz
+  const renderRestaurant = ({ item }) => (
+    <View style={styles.categoriesItemContainer}>
+    <Text style={styles.categoriesName}>{item.restourantName}</Text>
+    <Image source={{ uri: `data:image/jpeg;base64,${item.placeBgPicName}` }} style={styles.categoriesPhoto} />
+    <Text style={styles.placeDefinition}>{item.placeDefinition}</Text>
+    
+    
+
+
+  </View>
   );
 
   return (
     <View>
-      <FlatList data={restaurants} renderItem={renderCategory} keyExtractor={(item) => `${item.id}`} />
+      <FlatList
+        data={restaurants}
+        renderItem={renderRestaurant}
+        keyExtractor={(item) => `${item.id}`}
+      />
     </View>
   );
-}
+};
+
+export default RestaurantScreen;

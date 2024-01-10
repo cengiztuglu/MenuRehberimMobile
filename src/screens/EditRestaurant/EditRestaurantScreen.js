@@ -1,18 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
-const EditRestaurantScreen = ({ route }) => {
-  const { username } = route.params;
+
+const EditRestaurantScreen = () => {
+  const [username, setUsername] = useState('');
   const [restourantName, setRestName] = useState('');
   const [placeDefinition, setRestDesc] = useState('');
   const [placeAdress, setRestAddress] = useState('');
   const [category, setRestCategory] = useState('');
   const [placeBgPicName, setRestPhoto] = useState(null);
+  const navigation = useNavigation();
+
+  
+
 
   useEffect(() => {
+    getUsernameFromStorage();
     getPermissionAsync();
   }, []);
+
+  const getUsernameFromStorage = async () => {
+    try {
+      const storedUsername = await AsyncStorage.getItem('username');
+      if (storedUsername !== null) {
+        setUsername(storedUsername);
+      }
+    } catch (error) {
+      console.error('Error fetching username:', error);
+    }
+  };
 
   const getPermissionAsync = async () => {
     if (Platform.OS !== 'web') {
@@ -33,10 +52,10 @@ const EditRestaurantScreen = ({ route }) => {
         base64: false,
       });
   
-      console.log('ImagePicker result:', result);
+     
   
       if (!result.cancelled) {
-        setRestPhoto(result.assets[0].uri); // Resmin URI'sini alıp state'e ata
+        setRestPhoto(result.assets[0].uri);
       } else {
         console.log('Resim seçilmedi veya bir hata oluştu.');
       }
@@ -55,7 +74,7 @@ const EditRestaurantScreen = ({ route }) => {
   
       const localUri = placeBgPicName;
       const filename = localUri.split('/').pop();
-      const type = 'image/jpeg'; // Resim tipini doğrudan belirle
+      const type = 'image/jpeg';
   
       formData.append('file', { uri: localUri, name: filename, type });
   
@@ -70,6 +89,8 @@ const EditRestaurantScreen = ({ route }) => {
       if (response.ok) {
         const data = await response.json();
         console.log('API response:', data);
+        navigation.navigate('Menunuzu Duzenleyin'); // Burada sayfaya yönlendirme yapılıyor
+
       } else {
         console.error('API request failed.');
       }
