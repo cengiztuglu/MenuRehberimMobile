@@ -42,7 +42,14 @@ export const RecipeCard = StyleSheet.create({
     marginLeft: 5,
   },
   category: {
-    marginTop: 5,
+    marginTop: 2,
     marginBottom: 5
-  }
+  },
+  price: {
+    marginTop: 2,
+    color:'#e34b5a',
+    marginBottom: 5,
+    fontWeight: 'bold',
+
+  },
 });

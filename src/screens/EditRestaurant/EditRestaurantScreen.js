@@ -78,7 +78,7 @@ const EditRestaurantScreen = () => {
   
       formData.append('file', { uri: localUri, name: filename, type });
   
-      const response = await fetch(`http://192.168.173.91:8080/api/placeAdd/${username}`, {
+      const response = await fetch(`http://192.168.1.104:8080/api/placeAdd/${username}`, {
         method: 'POST',
         body: formData,
         headers: {
