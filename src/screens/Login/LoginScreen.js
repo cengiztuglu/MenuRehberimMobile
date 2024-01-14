@@ -28,10 +28,9 @@ export default function LoginScreen(props) {
 
   const handleLogin = () => {
     const API_URL = isRestaurantLogin
-      ? "http://192.168.1.104:8080/api/rlogin"
-      : "http://192.168.1.104:8080/api/login";
-
-   
+      ? "http://192.168.1.110:8080/api/rlogin"
+      : "http://192.168.1.110:8080/api/login";
+  
     axios
       .post(API_URL, {
         userName,
@@ -39,21 +38,27 @@ export default function LoginScreen(props) {
       })
       .then(async (response) => {
         console.log("Başarılı giriş:", response.data);
-
-      // Oturum bilgilerini saklama
-      try {
-        await AsyncStorage.setItem('username', userName);
-        navigation.navigate('Restoranınızı Tanımlayın');
-      } catch (error) {
-        console.error("AsyncStorage hatası:", error);
-      }
-    })
-    .catch((error) => {
-      // Hata durumu
-      console.error("Giriş hatası:", error);
-    });
+  
+        // Oturum bilgilerini saklama
+        try {
+          await AsyncStorage.setItem('username', userName);
+  
+          // Conditionally navigate based on isRestaurantLogin
+          if (isRestaurantLogin) {
+            navigation.navigate('Restoranınızı Tanımlayın');
+          } else {
+            // If not a restaurant, navigate to the home page or another destination
+            navigation.navigate('Menu Rehberim'); // Replace 'Anasayfa' with your home screen name
+          }
+        } catch (error) {
+          console.error("AsyncStorage hatası:", error);
+        }
+      })
+      .catch((error) => {
+        // Hata durumu
+        console.error("Giriş hatası:", error);
+      });
   };
-
   return (
     <View style={styles.container}>
       <Image

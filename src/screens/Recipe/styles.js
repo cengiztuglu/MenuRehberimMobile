@@ -53,12 +53,22 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   infoPhoto: {
-    height: 20,
-    width: 20,
-    marginRight: 0
+    width: '100%',
+    height: 160,
+    borderRadius: 20,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    shadowColor: 'blue',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1.0,
+    elevation: 3
   },
   infoRecipe: {
     fontSize: 14,

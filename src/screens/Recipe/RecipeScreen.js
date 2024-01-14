@@ -1,62 +1,55 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
-import {
-  ScrollView,
-  Text,
-  View,
-  Image,
-  Dimensions,
-  TouchableHighlight,
-} from "react-native";
+import { ScrollView, Text, View, Image, Dimensions, TouchableHighlight, Button } from "react-native";
+import { useNavigation } from '@react-navigation/native'; // Import the necessary functions from React Navigation
 import styles from "./styles";
 import Carousel, { Pagination } from "react-native-snap-carousel";
-import {
-  getIngredientName,
-  getCategoryName,
-  getCategoryById,
-} from "../../data/MockDataAPI";
-import BackButton from "../../components/BackButton/BackButton";
 import ViewIngredientsButton from "../../components/ViewIngredientsButton/ViewIngredientsButton";
 
 const { width: viewportWidth } = Dimensions.get("window");
 
-export default function RecipeScreen(props) {
-  const { navigation, route } = props;
-
-  const item = route.params?.item;
-  const category = getCategoryById(item.categoryId);
-  const title = getCategoryName(category.id);
-
+export default function RecipeScreen({ route }) {
+  const { id } = route.params;
+  const [menus, setMenus] = useState([]);
   const [activeSlide, setActiveSlide] = useState(0);
-
   const slider1Ref = useRef();
+  const navigation = useNavigation(); // Initialize navigation
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTransparent: "true",
-      headerLeft: () => (
-        <BackButton
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
-      ),
-      headerRight: () => <View />,
-    });
-  }, []);
+    fetch(`http://192.168.1.110:8080/api/ItemPull/${id}`)
+      .then(response => response.json())
+      .then(data => {
+        setMenus(data);
+      })
+      .catch(error => {
+        console.error('Veri çekme hatası:', error);
+      });
+  }, [id]);
 
   const renderImage = ({ item }) => (
     <TouchableHighlight>
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: item }} />
+        <Image style={styles.infoPhoto} source={{ uri: `data:image/jpeg;base64,${item.itemPicName}` }} />
+
       </View>
+      
     </TouchableHighlight>
   );
 
-  const onPressIngredient = (item) => {
-    var name = getIngredientName(item);
-    let ingredient = item;
-    navigation.navigate("Ingredient", { ingredient, name });
+  const handleButtonClick = () => {
+    navigation.navigate('Yorumlar', { itemid: id });
   };
+
+  if (!menus || menus.length === 0) {
+    // Veri henüz yükleniyor veya boşsa başa dön
+    return (
+      <View>
+        <Text>Yükleniyor...</Text>
+      </View>
+    );
+  }
+
+  const item = menus;
+  console.log('Item structure:', item);
 
   return (
     <ScrollView style={styles.container}>
@@ -64,7 +57,7 @@ export default function RecipeScreen(props) {
         <View style={styles.carousel}>
           <Carousel
             ref={slider1Ref}
-            data={item.photosArray}
+            data={menus}
             renderItem={renderImage}
             sliderWidth={viewportWidth}
             itemWidth={viewportWidth}
@@ -75,56 +68,24 @@ export default function RecipeScreen(props) {
             autoplay={false}
             autoplayDelay={500}
             autoplayInterval={3000}
-            onSnapToItem={(index) => setActiveSlide(0)}
+            onSnapToItem={(index) => setActiveSlide(index)}
           />
-          <Pagination
-            dotsLength={item.photosArray.length}
-            activeDotIndex={activeSlide}
-            containerStyle={styles.paginationContainer}
-            dotColor="rgba(255, 255, 255, 0.92)"
-            dotStyle={styles.paginationDot}
-            inactiveDotColor="white"
-            inactiveDotOpacity={0.4}
-            inactiveDotScale={0.6}
-            carouselRef={slider1Ref.current}
-            tappableDots={!!slider1Ref.current}
-          />
+        
         </View>
       </View>
       <View style={styles.infoRecipeContainer}>
-        <Text style={styles.infoRecipeName}>{item.title}</Text>
+        <Text style={styles.infoRecipeName}>{item ? item.itemName : 'İsim Yok'}</Text>
         <View style={styles.infoContainer}>
-          <TouchableHighlight
-            onPress={() =>
-              navigation.navigate("RecipesList", { category, title })
-            }
-          >
-            <Text style={styles.category}>
-              {getCategoryName(item.categoryId).toUpperCase()}
-            </Text>
-          </TouchableHighlight>
-        </View>
-
-        <View style={styles.infoContainer}>
-          <Image
-            style={styles.infoPhoto}
-            source={require("../../../assets/icons/time.png")}
-          />
-          <Text style={styles.infoRecipe}>{item.time} minutes </Text>
-        </View>
-
-        <View style={styles.infoContainer}>
-          <ViewIngredientsButton
-            onPress={() => {
-              let ingredients = item.ingredients;
-              let title = "Ingredients for " + item.title;
-              navigation.navigate("IngredientsDetails", { ingredients, title });
-            }}
-          />
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.infoDescriptionRecipe}>{item.description}</Text>
+          <Image style={styles.infoPhoto} source={{ uri: `data:image/jpeg;base64,${item ? item.itemPicName : ''}` }} />
         </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoDescriptionRecipe}>{item ? item.itemDefinition : 'Tanım Yok'}</Text>
+        </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button title="Yorum Yap" onPress={handleButtonClick} />
       </View>
     </ScrollView>
   );

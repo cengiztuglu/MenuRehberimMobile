@@ -22,8 +22,8 @@ export default function App() {
 
   const handleRegister = () => {
     const userData = { name, surName, userName, email, password };
-    const restaurantEndpoint = 'http://192.168.1.104:8080/api/restourantAdd';
-    const userEndpoint = 'http://192.168.1.104:8080/api/user';
+    const restaurantEndpoint = 'http://192.168.1.110:8080/api/restourantAdd';
+    const userEndpoint = 'http://192.168.1.110:8080/api/user';
 
     let endpoint = '';
     if (registrationType === 'restaurant') {

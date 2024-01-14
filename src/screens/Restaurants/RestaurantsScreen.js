@@ -10,7 +10,7 @@ const RestaurantScreen = () => {
   const [restaurants, setRestaurants] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.1.104:8080/api/getPlace')
+    fetch('http://192.168.1.110:8080/api/getPlace')
       .then(response => response.json())
       .then(data => {
         // Burada gelen verileri kullanabilirsiniz, örneğin:
