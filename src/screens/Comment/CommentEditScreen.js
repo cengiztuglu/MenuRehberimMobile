@@ -1,74 +1,34 @@
-import React, { useLayoutEffect,useState } from "react";
+import React, { useLayoutEffect,useState,useEffect } from "react";
 import { FlatList, Text, View, TouchableHighlight, StyleSheet, TouchableOpacity,TextInput } from "react-native";
 import styles from "./styles";
 import MenuImage from "../../components/MenuImage/MenuImage";
 import { getCategoryName } from "../../data/MockDataAPI";
 import { Ionicons } from '@expo/vector-icons'; 
 
-export default Comments = (props) => {
-  const data = [
-    {
-      id: 1,
-      name: 'Frank Odalthh',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
-    },
-    {
-      id: 2,
-      name: 'John DoeLink',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
-    },
-    {
-      id: 3,
-      name: 'March SoulLaComa',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
-    },
-    {
-      id: 4,
-      name: 'Finn DoRemiFaso',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
-    },
-    {
-      id: 5,
-      name: 'Maria More More',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
-    },
-  ]
+export default Comments = ({route}) => {
+  const { itemid } = route.params;
 
-  const [comments, setComment] = useState(data)
 
-  const { navigation } = props;
+  const [comments, setComment] = useState([])
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <MenuImage
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
-      ),
-      headerRight: () => <View />,
-    });
+
+ 
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(`http://192.168.1.110:8080/api/commentList/${itemid}`); 
+        const data = await response.json();
+        setComment(data);
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    };
+
+    fetchComments();
   }, []);
 
-  const onPressRecipe = (item) => {
-    navigation.navigate("Recipe", { item });
-  };
+ 
 
-  const renderRecipes = ({ item }) => (
-    
-    <TouchableHighlight underlayColor="rgba(73,182,77,0.9)" onPress={() => onPressRecipe(item)}>
-      <View style={styles.containeritem}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
-      </View>
-    </TouchableHighlight>
-  );
 
   const [rating, setRating] = useState(0); // Kullanıcının puanını burada tutuyoruz.
 
@@ -91,7 +51,7 @@ export default Comments = (props) => {
   <View >
     <View >  
     <View style={stylesComment.form}>
-      <Text style={stylesComment.label}>Yorumunuz :</Text>
+      <Text style={stylesComment.label}>Yorumunuz {itemid} :</Text>
         <TextInput
           style={stylesComment.input}
           placeholder="Yorumunuz"
@@ -127,10 +87,10 @@ export default Comments = (props) => {
         <View style={stylesComment.container}>
           <View style={stylesComment.content}>
             <View style={stylesComment.contentHeader}>
-              <Text style={stylesComment.name}>{Notification.name}</Text>
+              <Text style={stylesComment.name}>{Notification.userName}</Text>
               <Text style={stylesComment.time}>9:58 am</Text>
             </View>
-              <Text rkType="primary3 mediumLine">{Notification.comment}</Text>
+              <Text rkType="primary3 mediumLine">{Notification.commentText}</Text>
             </View>
           </View>
        
