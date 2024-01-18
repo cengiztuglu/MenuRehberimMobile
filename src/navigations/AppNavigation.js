@@ -44,7 +44,7 @@ function MainNavigator() {
       <Stack.Screen name='Menunuzu Duzenleyin' component={EditMenuScreen}/>
       <Stack.Screen name='Yorumlar' component={CommentEditScreen}/>
       <Stack.Screen name='Categories' component={CategoriesScreen}/>
-      <Stack.Screen name='Recipe' component={RecipeScreen}/>
+      <Stack.Screen name='Detay' component={RecipeScreen}/>
       <Stack.Screen name='RecipesList' component={RecipesListScreen} />
       <Stack.Screen name='Ingredient' component={IngredientScreen} />
       <Stack.Screen name='Search' component={SearchScreen} />

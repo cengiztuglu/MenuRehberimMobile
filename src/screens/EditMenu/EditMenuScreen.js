@@ -83,7 +83,7 @@ const EditMenuScreen = () => {
   
       formData.append('file', { uri: localUri, name: filename, type });
   
-      const response = await fetch(`http://192.168.1.110:8080/api/menuItemsAdd/${username}`, {
+      const response = await fetch(`http://192.168.75.91:8080/api/menuItemsAdd/${username}`, {
         method: 'POST',
         body: formData,
         headers: {

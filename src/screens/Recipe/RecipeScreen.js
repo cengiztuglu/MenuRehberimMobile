@@ -15,7 +15,7 @@ export default function RecipeScreen({ route }) {
   const navigation = useNavigation(); // Initialize navigation
 
   useLayoutEffect(() => {
-    fetch(`http://192.168.1.110:8080/api/ItemPull/${id}`)
+    fetch(`http://192.168.75.91:8080/api/ItemPull/${id}`)
       .then(response => response.json())
       .then(data => {
         setMenus(data);

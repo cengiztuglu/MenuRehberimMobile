@@ -22,7 +22,7 @@ export default function MenuItemsScreen({route}) {
 
 
   useLayoutEffect(() => {
-    fetch(`http://192.168.1.110:8080/api/getMenuItemsById/${id}`)
+    fetch(`http://192.168.75.91:8080/api/getMenuItemsById/${id}`)
     .then(response => response.json())
     .then(data => {
       // Burada gelen verileri kullanabilirsiniz, örneğin:
@@ -48,7 +48,7 @@ export default function MenuItemsScreen({route}) {
     </TouchableHighlight>
   );
   const onPressRecipe = (id) => {
-    navigation.navigate('Recipe', { id });
+    navigation.navigate('Detay', { id });
   };
   return (
     <View>

@@ -28,8 +28,8 @@ export default function LoginScreen(props) {
 
   const handleLogin = () => {
     const API_URL = isRestaurantLogin
-      ? "http://192.168.1.110:8080/api/rlogin"
-      : "http://192.168.1.110:8080/api/login";
+      ? "http://192.168.75.91:8080/api/rlogin"
+      : "http://192.168.75.91:8080/api/login";
   
     axios
       .post(API_URL, {
@@ -92,14 +92,13 @@ export default function LoginScreen(props) {
           onValueChange={(value) => setIsRestaurantLogin(value)}
         />
       </View>
+      <Text style={styles.registerText} onPress={onPressRegister}>
+          Hesabınız yok mu? Şimdi kayıt olun.
+        </Text>
       <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
         <Text style={styles.loginText}>Giriş Yap</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={onPressRegister}>
-        <Text style={styles.registerText}>
-          Hesabınız yok mu? Şimdi kayıt olun.
-        </Text>
-      </TouchableOpacity>
+       
     </View>
   );
 }

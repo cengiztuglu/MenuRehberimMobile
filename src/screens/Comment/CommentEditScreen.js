@@ -1,106 +1,142 @@
-import React, { useLayoutEffect,useState,useEffect } from "react";
-import { FlatList, Text, View, TouchableHighlight, StyleSheet, TouchableOpacity,TextInput } from "react-native";
+import React, { useLayoutEffect, useState, useEffect } from "react";
+import { FlatList, Text, View, TouchableHighlight, StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import styles from "./styles";
-import MenuImage from "../../components/MenuImage/MenuImage";
-import { getCategoryName } from "../../data/MockDataAPI";
-import { Ionicons } from '@expo/vector-icons'; 
 
-export default Comments = ({route}) => {
+import { Ionicons } from '@expo/vector-icons';
+import { format } from 'date-fns';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+export default Comments = ({ route }) => {
   const { itemid } = route.params;
 
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
+  const [rating, setRating] = useState(0);
+  const [userName, setUserName] = useState('');
 
-  const [comments, setComment] = useState([])
-
-
- 
   useEffect(() => {
-    const fetchComments = async () => {
+    const fetchCommentsAndUserName = async () => {
       try {
-        const response = await fetch(`http://192.168.1.110:8080/api/commentList/${itemid}`); 
-        const data = await response.json();
-        setComment(data);
+        // Yorumları çek
+        const responseComments = await fetch(`http://192.168.75.91:8080/api/commentList/${itemid}`);
+        const dataComments = await responseComments.json();
+        setComments(dataComments);
+
+        // Kullanıcı adını çek
+        const storedUserName = await AsyncStorage.getItem('username');
+        if (storedUserName) {
+          setUserName(storedUserName);
+        }
       } catch (error) {
-        console.error('Error fetching comments:', error);
+        console.error('Error fetching comments or username:', error);
       }
     };
 
-    fetchComments();
-  }, []);
+    // Yorumları ve kullanıcı adını çek
+    fetchCommentsAndUserName();
 
- 
+    // Her 5 saniyede bir yorumları güncelle
+    const intervalId = setInterval(() => {
+      fetchCommentsAndUserName();
+    }, 5000);
 
+    // Component unmount olduğunda interval'i temizle
+    return () => clearInterval(intervalId);
+  }, [itemid]);
 
-  const [rating, setRating] = useState(0); // Kullanıcının puanını burada tutuyoruz.
-
-  // Yıldızları göstermek için bir dizi oluşturuyoruz.
+  const handleSubmit = async () => {
+    try {
+      const currentDate = new Date();
+      const formattedDate = currentDate.toISOString(); // Tarih formatını ayarla
+  
+      const response = await fetch(`http://192.168.75.91:8080/api/commentAdd/${userName}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          itemId: itemid,
+          commentText: newComment,
+          score: rating,
+          commentDate: formattedDate,
+        }),
+      });
+  
+      if (response.ok) {
+        // Tüm yorumları yeniden çek ve güncelle
+        try {
+          const responseComments = await fetch(`http://192.168.75.91:8080/api/commentList/${itemid}`);
+          const dataComments = await responseComments.json();
+          setComments(dataComments);
+        } catch (error) {
+          console.error('Error fetching comments:', error);
+        }
+  
+        setNewComment('');
+        setRating(0);
+      } else {
+        console.error('Error posting comment:', response.status);
+      }
+    } catch (error) {
+      console.error('Error posting comment:', error);
+    }
+  };
   const stars = Array.from({ length: 5 }, (_, index) => (
     <TouchableOpacity key={index} onPress={() => setRating(index + 1)}>
       <Ionicons
-        name={index < rating ? 'star' : 'star-outline'} // Seçilen puan kadar yıldızı dolu, geri kalanını boş gösteriyoruz.
+        name={index < rating ? 'star' : 'star-outline'}
         size={32}
-        color="#FFD700" // Yıldız rengi
+        color="#FFD700"
         marginTop={15}
         alignItems="center"
       />
     </TouchableOpacity>
   ));
 
-
   return (
-
-  <View >
-    <View >  
-    <View style={stylesComment.form}>
-      <Text style={stylesComment.label}>Yorumunuz {itemid} :</Text>
+    <View>
+      <View style={stylesComment.form}>
+        <Text style={stylesComment.label}>Yorumunuz {userName} :</Text>
         <TextInput
           style={stylesComment.input}
           placeholder="Yorumunuz"
-          value={comments}
-          onChangeText={setComment}
+          value={newComment}
+          onChangeText={setNewComment}
         />
 
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={stylesComment.label}>Puanınız: </Text>
-        {stars} 
-      </View>
-        
-        <TouchableOpacity style={stylesComment.button} onPress={() => handleSubmit({itemName, itemDesc, itemPrice, itemCategory})}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={stylesComment.label}>Puanınız: </Text>
+          {stars}
+        </View>
+
+        <TouchableOpacity style={stylesComment.button} onPress={handleSubmit}>
           <Text style={stylesComment.buttonText}>Kaydet</Text>
         </TouchableOpacity>
-    </View>
-    </View> 
+      </View>
 
-    <FlatList
-      style={styles.root}
-      data={comments}
-      extraData={this.state}
-      ItemSeparatorComponent={() => {
-        return <View style={stylesComment.separator} />
-      }}
-      keyExtractor={item => {
-        return item.id
-      }}
-      renderItem={item => {
-        const Notification = item.item
-        return (
+      <FlatList
+        style={styles.root}
+        data={comments}
+        ItemSeparatorComponent={() => <View style={stylesComment.separator} />}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={stylesComment.container}>
+            <View style={stylesComment.content}>
+              <View style={stylesComment.contentHeader}>
+                <Text style={stylesComment.name}>{item.userName}</Text>
+                <Text style={stylesComment.time}>({format(new Date(item.commentDate), 'yyyy-MM-dd HH:mm:ss')})</Text>
+                <Text style={stylesComment.score}>Score:{item.score}</Text>
 
-        <View style={stylesComment.container}>
-          <View style={stylesComment.content}>
-            <View style={stylesComment.contentHeader}>
-              <Text style={stylesComment.name}>{Notification.userName}</Text>
-              <Text style={stylesComment.time}>9:58 am</Text>
-            </View>
-              <Text rkType="primary3 mediumLine">{Notification.commentText}</Text>
+              </View>
+              <Text rkType="primary3 mediumLine">{item.commentText}</Text>
             </View>
           </View>
-       
-        )
-      }}
-    />
-  </View>
-  )
-}
-
+        )}
+      />
+    </View>
+  );
+};
 const stylesComment = StyleSheet.create({
   root: {
     backgroundColor: '#ffffff',
@@ -133,6 +169,10 @@ const stylesComment = StyleSheet.create({
     backgroundColor: '#CCCCCC',
   },
   time: {
+    fontSize: 11,
+    color: '#808080',
+  },
+  score: {
     fontSize: 11,
     color: '#808080',
   },
@@ -170,6 +210,4 @@ const stylesComment = StyleSheet.create({
     fontSize: 16,
     alignItems:'center',
   },
-})
-
-
+});
