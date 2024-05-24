@@ -1,3 +1,25 @@
+**Restaurant Management Application**
+
+This project is a mobile application developed to manage and display meal information for restaurants. It utilizes Spring Boot for the backend and React Native for the mobile frontend.
+
+
+***Features***
+>User Registration and Login: Users can register for and log into the application. Registered users can start using the application by logging in.
+
+>Menu Display: The restaurant's menu is presented to users categorized. Each item is shown with its price and description. The menu is organized for users to easily browse and select their desired meals.
+
+>Commenting: Users can comment on the meals offered by the restaurant. This allows other users to gain more insights into the quality of service and meals provided.
+
+***Getting Started***
+
+To run the backend portion of the project, follow these steps within the backend folder:
+
+>1. Run mvn spring-boot:run command to start the Spring Boot application.
+
+To start the mobile application, follow these steps within the mobile folder:
+
+>1. Run npm install command to install the necessary dependencies.
+>2. Run npm start command to start the React Native application.
 
 
 ![Login](https://github.com/cengiztuglu/MenuRehberimMobile/assets/75539883/1a252700-a490-4b48-b5b8-de6218025720)
